@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class BirdScript : MonoBehaviour
 {
+    public static int score;
     private Rigidbody2D rb2d;
     private Collider2D[] colliders;
+    public ModalScript modalScript;
     void Start()
     {
+        score = 0;
         rb2d = this.GetComponent<Rigidbody2D>();
         colliders = this.GetComponents<Collider2D>();
     }
@@ -22,7 +25,7 @@ public class BirdScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Pipe"))
         {
-            Debug.Log("Game Over");
+            modalScript.ShowGameOverModal(score);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -31,7 +34,7 @@ public class BirdScript : MonoBehaviour
         {
             if (!colliders.Any(c => c.IsTouching(collision)))
             {
-                Debug.Log("+ 1");
+                score += 1;
             }
 
         }
